@@ -1,12 +1,15 @@
 package br.com.arfaxtec.mps.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Usuario implements Serializable {
@@ -28,6 +31,9 @@ public class Usuario implements Serializable {
 	
 	@Column(length = 30)
 	private String senha;
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<OrdemServico> ordensDeServicos = new ArrayList<>();
 
 	public Usuario() {
 
@@ -80,6 +86,10 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	public List<OrdemServico> getOrdensDeServicos() {
+		return ordensDeServicos;
+	}
 
 	@Override
 	public int hashCode() {
@@ -105,5 +115,6 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
+
 
 }
