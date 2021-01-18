@@ -2,14 +2,31 @@ package br.com.arfaxtec.mps.entities;
 
 import java.io.Serializable;
 
-public class Usuario implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(length = 120)
 	private String nome;
+	
+	@Column(length = 120)
 	private String email;
+	
+	@Column(length = 16)
 	private String telefone;
+	
+	@Column(length = 30)
 	private String senha;
 
 	public Usuario() {
