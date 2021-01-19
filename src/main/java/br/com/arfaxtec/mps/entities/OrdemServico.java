@@ -43,6 +43,8 @@ public class OrdemServico implements Serializable{
 	
 	@OneToOne(mappedBy = "ordemServico", cascade = CascadeType.ALL)
 	private Pagamento pagamento;
+	
+	
 
 	public OrdemServico() {
 
@@ -100,6 +102,18 @@ public class OrdemServico implements Serializable{
 	
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
+	}
+	
+	/*método que soma todos os itens e retorna o total do pedido*/
+	public Double getTotal() {
+		double soma = 0.0;
+		
+		/*primeiro vou varrer todos os itens*/
+		/*para todo item, soma = soma + getSubTotal*/
+		for (OSItem x : itens) {
+			soma = soma + x.getSubTotal();
+		}
+		return soma;
 	}
 
 	@Override
