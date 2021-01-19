@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import br.com.arfaxtec.mps.entities.Categoria;
 import br.com.arfaxtec.mps.entities.OSItem;
 import br.com.arfaxtec.mps.entities.OrdemServico;
+import br.com.arfaxtec.mps.entities.Pagamento;
 import br.com.arfaxtec.mps.entities.Produto;
 import br.com.arfaxtec.mps.entities.Usuario;
 import br.com.arfaxtec.mps.entities.enums.OrdemServicoStatus;
@@ -88,6 +89,11 @@ public class TesteConfig implements CommandLineRunner{
 		OSItem osi4 = new OSItem(o3, p5, 2, p5.getValor());
 		
 		oSItemRepositorio.saveAll(Arrays.asList(osi1, osi2, osi3, osi4));
+		
+		Pagamento pag1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPagamento(pag1);
+		
+		oSRepositorio.save(o1);
 		
 		
 	}
