@@ -2,6 +2,8 @@ package br.com.arfaxtec.mps.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -31,6 +34,10 @@ public class OrdemServico implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "clienteId")
 	private Usuario cliente;
+	
+	
+	@OneToMany(mappedBy = "id.ordemServico")
+	private Set<OSItem> itens = new HashSet<>();
 
 	public OrdemServico() {
 
@@ -76,6 +83,10 @@ public class OrdemServico implements Serializable{
 
 	public void setCliente(Usuario cliente) {
 		this.cliente = cliente;
+	}
+	
+	public Set<OSItem> getItens() {
+		return itens;
 	}
 
 	@Override

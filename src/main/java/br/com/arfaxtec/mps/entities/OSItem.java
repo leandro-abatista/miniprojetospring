@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.arfaxtec.mps.entities.pk.OSItemPK;
 
 @Entity
@@ -13,7 +15,7 @@ public class OSItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private OSItemPK id;
+	private OSItemPK id = new OSItemPK();
 	
 	private Integer quantidade;
 	private Double preco;
@@ -22,13 +24,14 @@ public class OSItem implements Serializable{
 
 	}
 
-	public OSItem(OrdemServico os, Produto produto,Integer quantidade, Double preco) {
-		id.setOrdemServico(os);
+	public OSItem(OrdemServico ordemServico, Produto produto,Integer quantidade, Double preco) {
+		id.setOrdemServico(ordemServico);
 		id.setProduto(produto);
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
 	
+	@JsonIgnore
 	public OrdemServico getOrdemServico() {
 		return id.getOrdemServico();
 	}

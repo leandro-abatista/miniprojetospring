@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import br.com.arfaxtec.mps.entities.Categoria;
+import br.com.arfaxtec.mps.entities.OSItem;
 import br.com.arfaxtec.mps.entities.OrdemServico;
 import br.com.arfaxtec.mps.entities.Produto;
 import br.com.arfaxtec.mps.entities.Usuario;
 import br.com.arfaxtec.mps.entities.enums.OrdemServicoStatus;
 import br.com.arfaxtec.mps.repositorios.CategoriaRepositorio;
+import br.com.arfaxtec.mps.repositorios.OSItemRepositorio;
 import br.com.arfaxtec.mps.repositorios.OSRepositorio;
 import br.com.arfaxtec.mps.repositorios.ProdutoRepositorio;
 import br.com.arfaxtec.mps.repositorios.UsuarioRepositorio;
@@ -33,6 +35,9 @@ public class TesteConfig implements CommandLineRunner{
 	
 	@Autowired
 	private ProdutoRepositorio produtoRepositorio;
+	
+	@Autowired
+	private OSItemRepositorio oSItemRepositorio;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -75,6 +80,14 @@ public class TesteConfig implements CommandLineRunner{
 		
 		usuarioRepositorio.saveAll(Arrays.asList(u1, u2));
 		oSRepositorio.saveAll(Arrays.asList(o1, o2, o3));
+		
+		
+		OSItem osi1 = new OSItem(o1, p1, 2, p1.getValor());
+		OSItem osi2 = new OSItem(o1, p3, 1, p3.getValor());
+		OSItem osi3 = new OSItem(o2, p3, 2, p3.getValor());
+		OSItem osi4 = new OSItem(o3, p5, 2, p5.getValor());
+		
+		oSItemRepositorio.saveAll(Arrays.asList(osi1, osi2, osi3, osi4));
 		
 		
 	}
