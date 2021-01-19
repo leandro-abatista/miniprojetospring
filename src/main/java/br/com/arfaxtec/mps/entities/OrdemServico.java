@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.arfaxtec.mps.entities.enums.OrdemServicoStatus;
+
 @Entity
 public class OrdemServico implements Serializable{
 	
@@ -23,6 +25,8 @@ public class OrdemServico implements Serializable{
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant momentoDoPedido;
+	
+	private Integer ordemServicoStatus;
 
 	@ManyToOne
 	@JoinColumn(name = "clienteId")
@@ -32,10 +36,11 @@ public class OrdemServico implements Serializable{
 
 	}
 
-	public OrdemServico(Long id, Instant momentoDoPedido, Usuario cliente) {
+	public OrdemServico(Long id, Instant momentoDoPedido, OrdemServicoStatus ordemServicoStatus, Usuario cliente) {
 		super();
 		this.id = id;
 		this.momentoDoPedido = momentoDoPedido;
+		setOrdemServicoStatus(ordemServicoStatus);
 		this.cliente = cliente;
 	}
 
@@ -57,6 +62,16 @@ public class OrdemServico implements Serializable{
 
 	public Usuario getCliente() {
 		return cliente;
+	}
+	
+	public OrdemServicoStatus getOrdemServicoStatus() {
+		return OrdemServicoStatus.valueOff(ordemServicoStatus);
+	}
+	
+	public void setOrdemServicoStatus(OrdemServicoStatus ordemServicoStatus) {
+		if (ordemServicoStatus != null) {
+			this.ordemServicoStatus = ordemServicoStatus.getCodigo();
+		}
 	}
 
 	public void setCliente(Usuario cliente) {
