@@ -12,33 +12,41 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 @Entity
-public class Categoria implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class Produto implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length = 30)
+	@Column(length = 150)
 	private String nome;
 	
+	@Column(length = 150)
+	private String descricao;
+	
+	private Double valor;
+	private String imgUrl;
+
 	/*
 	 * O Set é uma interface e não pode ser instanciada, e por isso foi utilizado o
 	 * HashSet
-	 * aqui garante que está coleção não comece nule, porém vazia e  instanciada.
+	 * new HashSet<>() => aqui garante que está coleção não comece nule, porém vazia e instanciada.
 	 */
 	@Transient
-	private Set<Produto> produtos = new HashSet<>();
+	private Set<Categoria> categorias = new HashSet<>(); 
 
-	public Categoria() {
+	public Produto() {
 		
 	}
 
-	public Categoria(Long id, String nome) {
-		super();
+	public Produto(Long id, String nome, String descricao, Double valor, String imgUrl) {
 		this.id = id;
 		this.nome = nome;
+		this.descricao = descricao;
+		this.valor = valor;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
@@ -56,9 +64,33 @@ public class Categoria implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public Set<Produto> getProdutos() {
-		return produtos;
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public Set<Categoria> getCategorias() {
+		return categorias;
 	}
 
 	@Override
@@ -77,7 +109,7 @@ public class Categoria implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -85,6 +117,5 @@ public class Categoria implements Serializable{
 			return false;
 		return true;
 	}
-
 
 }

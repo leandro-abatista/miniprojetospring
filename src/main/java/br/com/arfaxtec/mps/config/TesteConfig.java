@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.arfaxtec.mps.entities.Categoria;
 import br.com.arfaxtec.mps.entities.OrdemServico;
+import br.com.arfaxtec.mps.entities.Produto;
 import br.com.arfaxtec.mps.entities.Usuario;
 import br.com.arfaxtec.mps.entities.enums.OrdemServicoStatus;
 import br.com.arfaxtec.mps.repositorios.CategoriaRepositorio;
 import br.com.arfaxtec.mps.repositorios.OSRepositorio;
+import br.com.arfaxtec.mps.repositorios.ProdutoRepositorio;
 import br.com.arfaxtec.mps.repositorios.UsuarioRepositorio;
 
 @Configuration
@@ -28,6 +30,9 @@ public class TesteConfig implements CommandLineRunner{
 	
 	@Autowired
 	private CategoriaRepositorio categoriaRepositorio;
+	
+	@Autowired
+	private ProdutoRepositorio produtoRepositorio;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -39,7 +44,14 @@ public class TesteConfig implements CommandLineRunner{
 		Categoria cat5 = new Categoria(null, "Calçados");
 		Categoria cat6 = new Categoria(null, "Fashion");
 		
+		Produto p1 = new Produto(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+		Produto p2 = new Produto(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+		Produto p3 = new Produto(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+		Produto p4 = new Produto(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+		Produto p5 = new Produto(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+		
 		categoriaRepositorio.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6));
+		produtoRepositorio.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		
 		Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		Usuario u2 = new Usuario(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
