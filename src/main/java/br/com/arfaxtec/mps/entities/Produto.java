@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable{
@@ -43,6 +46,9 @@ public class Produto implements Serializable{
 	joinColumns = @JoinColumn(name = "produto_id"),
 	inverseJoinColumns = @JoinColumn(name = "categoria_id"))//aqui define a chave estrageira da outra entidade, que no caso é a Categoria
 	private Set<Categoria> categorias = new HashSet<>(); 
+	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<OSItem> itens = new HashSet<>();
 
 	public Produto() {
 		
@@ -98,6 +104,15 @@ public class Produto implements Serializable{
 
 	public Set<Categoria> getCategorias() {
 		return categorias;
+	}
+	
+	@JsonIgnore
+	public Set<OrdemServico> getOrdensServicos(){
+		Set<OrdemServico> set = new HashSet<>();
+		for (OSItem x : itens) {
+			set.add(x.getOrdemServico());
+		}
+		return set;
 	}
 
 	@Override

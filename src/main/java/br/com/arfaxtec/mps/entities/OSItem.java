@@ -40,6 +40,7 @@ public class OSItem implements Serializable{
 		id.setOrdemServico(ordemServico);
 	}
 	
+	
 	public Produto getProduto() {
 		return id.getProduto();
 	}
