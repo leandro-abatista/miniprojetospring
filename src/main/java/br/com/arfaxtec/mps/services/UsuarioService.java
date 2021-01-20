@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.arfaxtec.mps.entities.Usuario;
 import br.com.arfaxtec.mps.repositorios.UsuarioRepositorio;
+import br.com.arfaxtec.mps.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -21,7 +22,7 @@ public class UsuarioService {
 
 	public Usuario findById(Long id) {
 		Optional<Usuario> obj = usuarioRepositorio.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Usuario insert(Usuario obj) {
