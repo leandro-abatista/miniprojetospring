@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,11 +36,27 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	/**
+	 * Método para inserir um usuário no banco, e tem que retornar o código 201
+	 * @param obj
+	 * @return
+	 */
 	@PostMapping
 	public ResponseEntity<Usuario> insert(@RequestBody Usuario obj){
 		obj = usuarioService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	/**
+	 * Método para deletar um usuário do banco, e tem que retorna 204 No Contente
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id){
+		usuarioService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 }
