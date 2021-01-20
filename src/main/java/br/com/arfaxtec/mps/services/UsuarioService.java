@@ -3,6 +3,8 @@ package br.com.arfaxtec.mps.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -43,9 +45,14 @@ public class UsuarioService {
 	}
 
 	public Usuario update(Long id, Usuario obj) {
-		Usuario entity = usuarioRepositorio.getOne(id);
-		updateData(entity, obj);
-		return usuarioRepositorio.save(entity);
+		try {
+			Usuario entity = usuarioRepositorio.getOne(id);
+			updateData(entity, obj);
+			return usuarioRepositorio.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+		
 	}
 
 	private void updateData(Usuario entity, Usuario obj) {
